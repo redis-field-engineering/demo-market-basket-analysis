@@ -1,5 +1,17 @@
+cachelib==0.1.1
+click==8.0.0
+dominate==2.6.0
+Flask==2.0.0
+Flask-Bootstrap==3.3.7.1
+flask-nav==0.6
+Flask-Session==0.3.2
 hiredis==2.0.0
+itsdangerous==2.0.1
+Jinja2==3.0.0
+MarkupSafe==2.0.0
 ml2rt==0.2.0
 numpy==1.20.2
 redis==3.5.3
 redisai==1.0.2
+visitor==0.1.3
+Werkzeug==2.0.1
