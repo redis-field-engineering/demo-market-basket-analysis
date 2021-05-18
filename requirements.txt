@@ -1,0 +1,5 @@
+hiredis==2.0.0
+ml2rt==0.2.0
+numpy==1.20.2
+redis==3.5.3
+redisai==1.0.2
