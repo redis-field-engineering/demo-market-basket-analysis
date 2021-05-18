@@ -85,7 +85,6 @@ def index():
       setup_ai()
    j = rdb.smembers("USERLIST")
    user_list = [x[1].decode('utf-8') for x in enumerate(j)]
-   print(user_list)
    return render_template('index.html', userlist = user_list)
 
 @app.route('/dologin', methods = ['POST'])
@@ -99,6 +98,9 @@ def showprofile():
    user=session.get('username')
    profile = get_profile(user)
 
+   if not user:
+      return redirect("/", code=302)
+
    return render_template(
          'userprofile.html',
          user=session.get('username'),
@@ -108,6 +110,10 @@ def showprofile():
 @app.route('/cart')
 def showcart():
    user=session.get('username')
+
+   if not user:
+      return redirect("/", code=302)
+
    p = rdb.hgetall("user:{}".format(user))
    profile = {key.decode('utf-8'):int(value) for (key, value) in p.items()}
 

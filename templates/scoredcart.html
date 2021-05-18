@@ -19,7 +19,7 @@
 
 {% block content %}
 <div class="container">
-	<h3> {{ user }} <br><br> Cart Score: {{ score }} </h3><br><br>
+	<h3> {{ user }} <br><br> Cart Score: {{ "%.5f" | format(score | float) }} </h3><br><br>
      <table class="table table-striped">
      <tr><th>Category</th><th>Purchases</th></tr>
      {% for item in cart|dictsort(true, 'value', reverse = True) %}
