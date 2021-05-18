@@ -18,8 +18,17 @@
 
 
 {% block content %}
+
+{% if score | float >= 0.666 %}
+  {% set status="text-success" %}
+{% elif score | float >= 0.333 %}
+  {% set status="text-warning" %}
+{% else %}
+  {% set status="text-danger" %}
+{% endif %}
+
 <div class="container">
-	<h3> {{ user }} <br><br> Cart Score: {{ "%.5f" | format(score | float) }} </h3><br><br>
+	<h3> {{ user }} <br><br><p class="{{ status }}"> Cart Score: {{ "%.5f" | format(score | float) }}</p></h3><br><br>
      <table class="table table-striped">
      <tr><th>Category</th><th>Purchases</th></tr>
      {% for item in cart|dictsort(true, 'value', reverse = True) %}
