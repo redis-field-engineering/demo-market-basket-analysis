@@ -51,7 +51,8 @@ rdb = redis.Redis(
         password=redis_password
 )
 
-
+# Flush on startup
+rdb.flushdb()
 
 app = Flask(__name__,
             static_url_path='/docs',
@@ -59,6 +60,7 @@ app = Flask(__name__,
 )
 
 SESSION_TYPE = 'redis'
+SESSION_REDIS = rdb
 app.config.from_object(__name__)
 
 
@@ -66,7 +68,7 @@ bootstrap = Bootstrap()
 
 nav = Nav()
 topbar = Navbar('',
-    View('Home', 'index'),
+    View('User', 'index'),
     View('Profile', 'showprofile'),
     View('Cart', 'showcart'),
 )
@@ -90,7 +92,7 @@ def index():
 def dologin():
       form = request.form.to_dict()
       session['username'] = form['user']
-      return redirect("/", code=302)
+      return redirect("/profile", code=302)
 
 @app.route('/profile')
 def showprofile():

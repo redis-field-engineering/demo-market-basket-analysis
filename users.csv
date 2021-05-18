@@ -1,2 +1,8 @@
 USER,Apparel,Automotive,Baby,Beauty,Books,Camera,Digital_Ebook_Purchase,Digital_Music_Purchase,Digital_Software,Digital_Video_Download,Digital_Video_Games,Electronics,Furniture,Gift_Card,Grocery,Health_Personal_Care,Home_Entertainment,Home_Improvement,Home,Jewelry,Kitchen,Lawn_and_Garden,Luggage,Major_Appliances,Mobile_Apps,Mobile_Electronics,Musical_Instruments,Music,Office_Products,Outdoors,PC,Personal_Care_Appliances,Pet_Products,Shoes,Software,Sports,Tools,Toys,Video_DVD,Video_Games,Video,Watches,Wireless
 major_appliances,0,0,2,0,4,0,0,0,0,0,0,0,0,0,0,1,0,0,3,0,1,0,0,0,0,0,0,6,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0
+cheapnwide,0,2,0,1,9,0,139,0,0,0,0,0,0,0,0,1,0,3,1,1,0,4,0,0,0,0,1,0,2,0,4,0,1,0,0,0,0,4,0,0,0,0,5
+splurgenarrow,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,16,0,0,0,0,0
+standardnnarrow,1,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,4,0,0,0,0,0,0,1,0,0,0,0,3
+luxmobileapps,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+bargainebooks,0,0,0,0,0,0,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+pcgamer,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0
