@@ -8,6 +8,15 @@ import redis
 from os import environ
 import redisai
 
+CATEGORIES = [
+ "Apparel", "Automotive", "Baby", "Beauty", "Books", "Camera",
+ "Digital_Ebook_Purchase", "Digital_Music_Purchase", "Digital_Software", "Digital_Video_Download", "Digital_Video_Games",
+ "Electronics", "Furniture", "Gift_Card", "Grocery", "Health_Personal_Care", "Home_Entertainment",
+ "Home_Improvement", "Home", "Jewelry", "Kitchen", "Lawn_and_Garden", "Luggage",
+ "Major_Appliances", "Mobile_Apps", "Mobile_Electronics", "Musical_Instruments", "Music", "Office_Products",
+ "Outdoors", "PC", "Personal_Care_Appliances", "Pet_Products", "Shoes", "Software", "Sports", "Tools", "Toys", "Video_DVD",
+ "Video_Games", "Video", "Watches", "Wireless"
+]
 
 
 # From our local file
@@ -57,6 +66,7 @@ nav = Nav()
 topbar = Navbar('',
     View('Home', 'index'),
     View('Profile', 'showprofile'),
+    View('Cart', 'showcart'),
 )
 nav.register_element('top', topbar)
 
@@ -84,6 +94,49 @@ def showprofile():
          user=session.get('username'),
          profile=profile,
          )
+
+@app.route('/cart')
+def showcart():
+   user=session.get('username')
+   p = rdb.hgetall("user:{}".format(user))
+   profile = {key.decode('utf-8'):int(value) for (key, value) in p.items()}
+
+   return render_template(
+         'usercart.html',
+         user=session.get('username'),
+         profile=profile,
+         )
+
+@app.route('/scorecart', methods = ['POST'])
+def scorecart():
+      form = request.form.to_dict()
+      tnsr_name = "TENSOR:{}".format(session.sid)
+      tnsr = []
+      for c in CATEGORIES:
+         if c in form:
+            tnsr.append(float(form[c]))
+         else:
+            tnsr.append(float(0))
+
+      print(tnsr)
+      print(tnsr_name)
+      conn.tensorset(tnsr_name, tnsr, shape=[1, 43],dtype='float')
+      profile_results = conn.modelrun('profile_model', tnsr_name, "{}:results".format(tnsr_name))
+      res = conn.tensorget("{}:results".format(tnsr_name))[0][0]
+
+      #cleanup any tensors
+      conn.delete(tnsr_name)
+      conn.delete("{}:results".format(tnsr_name))
+
+      print(res)
+      return render_template(
+            'scoredcart.html',
+            user=session.get('username'),
+            cart=form,
+            score=res
+            )
+
+
 
 if __name__ == '__main__':
    sess = Session(app)

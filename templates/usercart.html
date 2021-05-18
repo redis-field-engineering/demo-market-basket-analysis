@@ -1,0 +1,46 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}RediSearch Autocomplete{% endblock %}
+
+{% block navbar %}
+{{ nav.top.render() }}
+{% endblock %}
+
+{% block metas %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block styles %}
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//jqueryui.com/resources/demos/style.css">
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+   {% set ns = namespace(count = 1) %}
+   <table class="table table-striped">
+   <tr>	   
+   <form action = "/scorecart" method = "POST">
+     {% for item in profile|dictsort(true, 'value', reverse = False) %}
+     <td>
+     {% if item[1]|float > 0 %}
+     <input type="checkbox" id="{{item[0]|string}}" name="{{item[0]|string}}" value="{{item[1]}}" checked>
+     {% else %}
+     <input type="checkbox" id="{{item[0]|string}}" name="{{item[0]|string}}" value="2">
+     {% endif %}
+     <label for="{{item[0]|string}}">{{item[0]|string}}</label>
+     </td>
+     {% if ns.count %4 == 0 %}</tr><tr>{% endif %}
+     {% set ns.count = ns.count + 1 %}
+     {% endfor %}
+   <tr>	   
+  </table>
+  <p><input type = "submit" value = "Score" /></p>
+  </form>
+
+</div>
+
+{% endblock %}
+ 

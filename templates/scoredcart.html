@@ -1,0 +1,36 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}RediSearch Autocomplete{% endblock %}
+
+{% block navbar %}
+{{ nav.top.render() }}
+{% endblock %}
+
+{% block metas %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block styles %}
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//jqueryui.com/resources/demos/style.css">
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+	<h3> {{ user }} <br><br> Cart Score: {{ score }} </h3><br><br>
+     <table class="table table-striped">
+     <tr><th>Category</th><th>Purchases</th></tr>
+     {% for item in cart|dictsort(true, 'value', reverse = True) %}
+     {% if item[1]|float > 0 %}
+     <tr><td>{{item[0]|string}}</td><td>{{item[1]}}</td></tr>
+     {% endif %}
+     {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}
+ 
