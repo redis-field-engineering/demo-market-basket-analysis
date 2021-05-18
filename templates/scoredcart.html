@@ -24,7 +24,11 @@
      <tr><th>Category</th><th>Purchases</th></tr>
      {% for item in cart|dictsort(true, 'value', reverse = True) %}
      {% if item[1]|float > 0 %}
-     <tr><td>{{item[0]|string}}</td><td>{{item[1]}}</td></tr>
+     {% if profile[item[0]]|float != item[1]|float %}
+     <tr><td><p class="text-danger">{{item[0]|string}}</p></td><td><p class="text-danger">{{item[1]}}</p></td></tr>
+     {% else %}
+     <tr><td><p class="text-success">{{item[0]|string}}</p></td><td><p class="text-success">{{item[1]}}</p></td></tr>
+     {% endif %}
      {% endif %}
      {% endfor %}
 

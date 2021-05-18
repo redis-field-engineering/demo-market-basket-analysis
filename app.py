@@ -8,6 +8,8 @@ import redis
 from os import environ
 import redisai
 
+from ai_setup import setup_ai
+
 CATEGORIES = [
  "Apparel", "Automotive", "Baby", "Beauty", "Books", "Camera",
  "Digital_Ebook_Purchase", "Digital_Music_Purchase", "Digital_Software", "Digital_Video_Download", "Digital_Video_Games",
@@ -70,8 +72,15 @@ topbar = Navbar('',
 )
 nav.register_element('top', topbar)
 
+def get_profile(user):
+   p = rdb.hgetall("user:{}".format(user))
+   profile = {key.decode('utf-8'):int(value) for (key, value) in p.items()}
+   return(profile)
+
 @app.route('/')
 def index():
+   if rdb.exists("USERLIST") < 1:
+      setup_ai()
    j = rdb.smembers("USERLIST")
    user_list = [x[1].decode('utf-8') for x in enumerate(j)]
    print(user_list)
@@ -86,8 +95,7 @@ def dologin():
 @app.route('/profile')
 def showprofile():
    user=session.get('username')
-   p = rdb.hgetall("user:{}".format(user))
-   profile = {key.decode('utf-8'):int(value) for (key, value) in p.items()}
+   profile = get_profile(user)
 
    return render_template(
          'userprofile.html',
@@ -118,8 +126,6 @@ def scorecart():
          else:
             tnsr.append(float(0))
 
-      print(tnsr)
-      print(tnsr_name)
       conn.tensorset(tnsr_name, tnsr, shape=[1, 43],dtype='float')
       profile_results = conn.modelrun('profile_model', tnsr_name, "{}:results".format(tnsr_name))
       res = conn.tensorget("{}:results".format(tnsr_name))[0][0]
@@ -128,11 +134,12 @@ def scorecart():
       conn.delete(tnsr_name)
       conn.delete("{}:results".format(tnsr_name))
 
-      print(res)
+      profile=get_profile(session.get('username'))
       return render_template(
             'scoredcart.html',
             user=session.get('username'),
             cart=form,
+            profile=profile,
             score=res
             )
 
