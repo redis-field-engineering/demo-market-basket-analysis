@@ -1,9 +1,14 @@
-# AI Basket Analysis
+# Market Basket Analysis
 
-We are looking to answer the following question:
+## Use case
 
-Does this basket of items fit larger purchasing patterns?
+Given the historical purchases of a user by category, we would like to know the likelyhood of them purchasing items from other categories.
 
+This is called [Market Basket Analysis](https://smartbridge.com/market-basket-analysis-101/)
+
+Market Basket Analysis can be used in fraud detection or to suggest other items that a customer may be interested in purchasing.
+
+This demo will allow you to score various baskets based on some pre-populated users and profiles.
 
 ## Running
 
