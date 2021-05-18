@@ -52,6 +52,12 @@ pip install -r requirements.txt
 python3 app.py
 ```
 
+## Architecture
+
+User profiles are stored in Redis as [hash data structures](https://redis.io/commands#hash)
+
+After the user adds items to the cart for scoring, the cart is transformed into a tensor, scored by [RedisAI](https://redisai.io) and a confidence score is returned.
+
 ## Data sources
 
-The data was pulled from [Amazon reviews datasets](https://s3.amazonaws.com/amazon-reviews-pds/readme.html) and the model was trained using reviews with verified purchases
+The data was pulled from [Amazon reviews datasets](https://s3.amazonaws.com/amazon-reviews-pds/readme.html) and the model was built using reviews with verified purchases.  Individual user profiles were compiled and analyzed to describe baskets that were trained to build the model that is included in this repo.
