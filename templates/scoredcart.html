@@ -16,6 +16,38 @@
   <link rel="stylesheet" href="//jqueryui.com/resources/demos/style.css">
 {% endblock %}
 
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+<script>
+var ctx = document.getElementById("confidence-chart");
+var myChart = new Chart(ctx, {
+  type: "doughnut",
+  data: {
+    labels: ["Confidence"],
+    datasets: [
+      {
+        label: ["# of Votes"],
+        data: [{{ score|float }}, {{ 1 - score|float }}],
+        backgroundColor: ["rgba(63, 191, 63, 0.8)", "rgba(191, 63, 89, 0.8)"],
+        borderWidth: 0
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    circumference: Math.PI + 1,
+    rotation: -Math.PI - 0.5,
+    cutoutPercentage: 50,
+
+    onClick(...args) {
+      console.log(args);
+    }
+  }
+});
+</script>
+{% endblock %}
+
+
 
 {% block content %}
 
@@ -28,7 +60,8 @@
 {% endif %}
 
 <div class="container">
-	<h3> {{ user }} <br><br><p class="{{ status }}"> Cart Score: {{ "%.5f" | format(score | float) }}</p></h3><br><br>
+  <table class="table table-striped"><tr><td>{{ user }}</td><td>Cart Score: {{ "%.5f" | format(score | float) }}</td></tr></table>
+     <canvas id="confidence-chart" width="10" height="5"></canvas>
      <table class="table table-striped">
      <tr><th>Category</th><th>Purchases</th></tr>
      {% for item in cart|dictsort(true, 'value', reverse = True) %}
